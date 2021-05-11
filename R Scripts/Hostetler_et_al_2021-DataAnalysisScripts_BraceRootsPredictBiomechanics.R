@@ -1,5 +1,5 @@
 #Brace root phenotypes predict plant biomechanics
-setwd(dir = "/Users/ashleyhostetler/Desktop/Hostetler et al., 2021/R Input Files/")
+setwd(dir = "/Users/ashleyhostetler/Desktop/Hostetler_et_al_2021/R Input Files/")
 
 #Library Load
 library(car)

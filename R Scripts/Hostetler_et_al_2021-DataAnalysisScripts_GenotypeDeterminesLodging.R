@@ -1,5 +1,5 @@
 #Genotype determines root lodging susceptibility
-setwd(dir = "/Users/ashleyhostetler/Desktop/Hostetler et al., 2021/R Input Files/")
+setwd(dir = "/Users/ashleyhostetler/Desktop/Hostetler_et_al_2021/R Input Files/")
 
 #Library Load###
 library(dplyr)

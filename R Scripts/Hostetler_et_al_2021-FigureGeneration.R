@@ -1,5 +1,5 @@
 ###Input File Info####
-setwd(dir = "/Users/ashleyhostetler/Desktop/Hostetler et al., 2021/R Input Files/FigureFiles/")
+setwd(dir = "/Users/ashleyhostetler/Desktop/Hostetler_et_al_2021/R Input Files/Figure Files/")
 
 ####Libary Load####
 library(ggplot2)
@@ -78,24 +78,29 @@ notShared = summary$obs.table
 lodging = lodging[!lodging$Genotype %in% notShared$Genotype,]
 head(lodging)
 lodging$Accession = lodging$Genotype
-data_GH = lodging %>%
-  dplyr::filter(Accession %in% c("6M502","A632", "B104","CML228","CML277","CML322","CML373","Hp301","Ki11","Ki3","L163","Mo17","Ms71","PHHB4","PHK46","PHR58"))
-data_GH %>% count(Accession)
-data_GL = lodging %>%
-  dplyr::filter(Accession %in% c("CML52","Hickory King","LH252","Oh7B","CML10","CML69","Mo18W","SA24","Tzi9","R84","2369","CML341","Ky21","M37W"))
-data_GL %>% count(Accession)
-data_E = lodging %>%
-  dplyr::filter(Accession %in% c("B97","Shoe Peg","CML247","CML258","PHB47","LH123Ht","Tx303","CML103","Tzi8","R78","B73","CML333","GT112","NC350","P39","F118","LH211","M162W","Oh43","W64A","NC262","PHT60"))
-data_E %>% count(Accession)
-#Figure 2A
-colnames(data_GH)
-lodging3 = data_GH[,c(3,13,8,9,12)]
+
+data_2C = lodging %>%
+  dplyr::filter(Accession %in% c("B104","CML228","6M502","CML277","Hp301","PHR58","CML373","L163","Ki11","Ms71","A632","Mo17","PHK46","PHHB4","Ki3","CML322","W64A","Oh43"))
+data_2C %>% count(Accession)
+
+data_2D = lodging %>%
+  dplyr::filter(Accession %in% c("CML52","SA24","CML10","Tzi9","Tzi8","Mo18W","CML69","Oh7B","Hickory King","NC350","P39","CML247","CML333","LH252","CML103","Tx303","B97","R84"))
+data_2D %>% count(Accession)
+
+data_2E = lodging %>%
+  dplyr::filter(Accession %in% c("R78","PHB47","Ky21","CML258","B73","CML341","Shoe Peg","LH123Ht","2369","NC262","M37W","GT112","F118","PHT60","M162W","LH211","Oh43","W64A"))
+data_2E %>% count(Accession)
+
+#Figure 2C
+colnames(data_2C)
+lodging3 = data_2C[,c(3,13,8,9,12)]
 lodging6 = lodging3[,c(1,3,4,5)]
 lodging3_long = melt(lodging6, id = c("Plot","Lodging.Index.Cat"))
 lodging3_long$Lodging.Index.Cat = as.character(lodging3_long$Lodging.Index.Cat)
 lodging3_long$Lodging.Index.Cat[lodging3_long$variable == "Total.Plants"] = "Total"
-lodging3$Accession = factor(lodging3$Accession,levels = c("6M502","A632", "B104","CML228","CML277","CML322","CML373","Hp301","Ki11","Ki3","L163","Mo17","Ms71","PHHB4","PHK46","PHR58"))
-plotA=ggplot(data=lodging3_long,aes(x=Plot, y=value, fill=Lodging.Index.Cat, color=Lodging.Index.Cat, alpha=variable)) +
+
+lodging3$Accession = factor(lodging3$Accession,levels = c("B104","CML228","6M502","CML277","Hp301","PHR58","CML373","L163","Ki11","Ms71","A632","Mo17","PHK46","PHHB4","Ki3","CML322","W64A","Oh43"))
+plotC=ggplot(data=lodging3_long,aes(x=Plot, y=value, fill=Lodging.Index.Cat, color=Lodging.Index.Cat, alpha=variable)) +
   geom_bar(stat="identity",position ="identity") +
   scale_colour_manual(values=c("red4","red1","gold2","skyblue4","gray60","gray60"),
                       breaks=c("Severe","Moderate","SlightModerate","Slight","NoEffect","Total")) +
@@ -105,19 +110,19 @@ plotA=ggplot(data=lodging3_long,aes(x=Plot, y=value, fill=Lodging.Index.Cat, col
   geom_text(aes(label=value), color="black", vjust=1.6)+
   theme_bw()+ 
   facet_grid(. ~ lodging3$Accession, scales="free", space="free")
-plotA
+plotC
 pdf("Figure2C.pdf", width = 11, height = 8.5)
-plot(plotA)
+plot(plotC)
 dev.off()
 #Figure 2D
-colnames(data_GL)
-lodging4 = data_GL[,c(3,13,8,9,12)]
+colnames(data_2D)
+lodging4 = data_2D[,c(3,13,8,9,12)]
 lodging7 = lodging4[,c(1,3,4,5)]
 lodging4_long = melt(lodging7, id = c("Plot","Lodging.Index.Cat"))
 lodging4_long$Lodging.Index.Cat = as.character(lodging4_long$Lodging.Index.Cat)
 lodging4_long$Lodging.Index.Cat[lodging4_long$variable == "Total.Plants"] = "Total"
-lodging4$Accession = factor(lodging4$Accession,levels = c("CML52","Hickory King","LH252","Oh7B","CML10","CML69","Mo18W","SA24","Tzi9","R84","2369","CML341","Ky21","M37W"))
-plotB=ggplot(data=lodging4_long,aes(x=Plot, y=value, fill=Lodging.Index.Cat, color=Lodging.Index.Cat, alpha=variable)) +
+lodging4$Accession = factor(lodging4$Accession,levels = c("CML52","SA24","CML10","Tzi9","Tzi8","Mo18W","CML69","Oh7B","Hickory King","NC350","P39","CML247","CML333","LH252","CML103","Tx303","B97","R84"))
+plotD=ggplot(data=lodging4_long,aes(x=Plot, y=value, fill=Lodging.Index.Cat, color=Lodging.Index.Cat, alpha=variable)) +
   geom_bar(stat="identity",position ="identity") +
   scale_colour_manual(values=c("red4","red1","gold2","skyblue4","gray60","gray60"),
                       breaks=c("Severe","Moderate","SlightModerate","Slight","NoEffect","Total")) +
@@ -127,20 +132,21 @@ plotB=ggplot(data=lodging4_long,aes(x=Plot, y=value, fill=Lodging.Index.Cat, col
   geom_text(aes(label=value), color="black", vjust=1.6)+
   theme_bw()+ 
   facet_grid(. ~ lodging4$Accession, scales="free", space="free")
-plotB
+plotD
 pdf("Figure2D.pdf", width = 11, height = 8.5)
-plot(plotB)
+plot(plotD)
 dev.off()
+
 #Figure 2E
-colnames(data_E)
-lodging2 = data_E[,c(3,13,8,9,12)]
+colnames(data_2E)
+lodging2 = data_2E[,c(3,13,8,9,12)]
 colnames(lodging2)
 lodging5 = lodging2[,c(1,3,4,5)]
 lodging2_long = melt(lodging5, id = c("Plot","Lodging.Index.Cat"))
 lodging2_long$Lodging.Index.Cat = as.character(lodging2_long$Lodging.Index.Cat)
 lodging2_long$Lodging.Index.Cat[lodging2_long$variable == "Total.Plants"] = "Total"
-lodging2$Accession = factor(lodging2$Accession,levels = c("B97","Shoe Peg","CML247","CML258","PHB47","LH123Ht","Tx303","CML103","Tzi8","R78","B73","CML333","GT112","NC350","P39","F118","LH211","M162W","Oh43","W64A","NC262","PHT60"))
-plotC=ggplot(data=lodging2_long,aes(x=Plot, y=value, fill=Lodging.Index.Cat, color=Lodging.Index.Cat, alpha=variable)) +
+lodging2$Accession = factor(lodging2$Accession,levels = c("R78","PHB47","Ky21","CML258","B73","CML341","Shoe Peg","LH123Ht","2369","NC262","M37W","GT112","F118","PHT60","M162W","LH211","Oh43","W64A"))
+plotE=ggplot(data=lodging2_long,aes(x=Plot, y=value, fill=Lodging.Index.Cat, color=Lodging.Index.Cat, alpha=variable)) +
   geom_bar(stat="identity",position ="identity") +
   scale_colour_manual(values=c("red4","red1","gold2","skyblue4","gray60","gray60"),
                       breaks=c("Severe","Moderate","SlightModerate","Slight","NoEffect","Total")) +
@@ -150,9 +156,9 @@ plotC=ggplot(data=lodging2_long,aes(x=Plot, y=value, fill=Lodging.Index.Cat, col
   geom_text(aes(label=value), color="black", vjust=1.6)+
   theme_bw()+ 
   facet_grid(. ~ lodging2$Accession, scales="free", space="free")
-plotC
+plotE
 pdf("Figure2E.pdf", width = 11, height = 8.5)
-plot(plotC)
+plot(plotE)
 dev.off()
 
 ####Figure 3####
@@ -176,20 +182,21 @@ data = read.csv("Figure4A_03302021.csv", header = TRUE, na.strings = "NA")
 data$Year = as.factor(data$Year)
 data$PLOT_ID2 = as.factor(data$PLOT_ID2)
 data$PLOT_ID3 = as.factor(data$PLOT_ID3)
-data$Accession = factor(data$Accession,levels = c("6M502","A632", "B104","CML228","CML277","CML322","CML373","Hp301","Ki11","Ki3","L163","Mo17","Ms71","PHHB4","PHK46","PHR58",
-                                                  "CML52","Hickory King","LH252","Oh7B","CML10","CML69","Mo18W","SA24","Tzi9","R84","2369","CML341","Ky21","M37W",
-                                                  "B97","Shoe Peg","CML247","CML258","PHB47","LH123Ht","Tx303","CML103","Tzi8","R78","B73","CML333","GT112","NC350","P39","F118","LH211","M162W","Oh43","W64A","NC262","PHT60"))
-Fig4A=ggplot(data=data,aes(x=Accession, y=Flexural.Rigidity..EI....IMU, color=Year, fill=cat))+
-  geom_boxplot(size = 0.25, color = "black") + 
-  geom_point(size = 1) +
+data$Accession = factor(data$Accession,levels = c("B104","CML228","6M502","CML277","Hp301","PHR58","CML373","L163","Ki11","Ms71",
+                                                   "A632","Mo17","PHK46","PHHB4","Ki3","CML322","CML52","SA24","CML10","Tzi9","Tzi8",
+                                                   "Mo18W","CML69","Oh7B","Hickory King","NC350","P39","CML247","CML333","LH252","CML103",
+                                                   "Tx303","B97","R84","R78","PHB47","Ky21","CML258","B73","CML341","Shoe Peg","LH123Ht",
+                                                   "2369","NC262","M37W","GT112","F118","PHT60","M162W","LH211","Oh43","W64A"))
+Fig4A=ggplot(data=data,aes(x=Accession, y=Flexural.Rigidity..EI....IMU, color=Year))+
+  geom_boxplot(size = 0.25, color = "black", fill="gray80") + 
+  geom_point(size = .50) +
   theme_minimal()+
   theme(axis.text.x = element_text(angle=90))+
-  scale_fill_manual(values=c("gray40","gray60","gray80"))+
-  scale_colour_manual(values=c("red4","gold3","plum","mediumvioletred","green4","lawngreen","darkred","red2"))+
+  scale_colour_manual(values=c("red4","darkslategray4"))+
   xlab("Genotype") + 
   ylab("EI")
 Fig4A
-pdf("Figure4A.pdf", width = 11, height = 8.5)
+pdf("Figure4A.pdf", width = 8, height = 5)
 plot(Fig4A)
 dev.off()
 
@@ -201,20 +208,21 @@ data = read.csv("Figure4B_03302021.csv", header = TRUE, na.strings = "NA")
 data$Year = as.factor(data$Year)
 data$PLOT_ID2 = as.factor(data$PLOT_ID2)
 data$PLOT_ID3 = as.factor(data$PLOT_ID3)
-data$Accession = factor(data$Accession,levels = c("6M502","A632", "B104","CML228","CML277","CML322","CML373","Hp301","Ki11","Ki3","L163","Mo17","Ms71","PHHB4","PHK46","PHR58",
-                                                  "CML52","Hickory King","LH252","Oh7B","CML10","CML69","Mo18W","SA24","Tzi9","R84","2369","CML341","Ky21","M37W",
-                                                  "B97","Shoe Peg","CML247","CML258","PHB47","LH123Ht","Tx303","CML103","Tzi8","R78","B73","CML333","GT112","NC350","P39","F118","LH211","M162W","Oh43","W64A","NC262","PHT60"))
-Fig4B=ggplot(data=data,aes(x=Accession, y=Ratio..None.All....IMU, color=Year, fill=cat))+
-  geom_boxplot(size = 0.25, color = "black") + 
-  geom_point(size = 1) +
+data$Accession = factor(data$Accession,levels = c("B104","CML228","6M502","CML277","Hp301","PHR58","CML373","L163","Ki11","Ms71",
+                                                  "A632","Mo17","PHK46","PHHB4","Ki3","CML322","CML52","SA24","CML10","Tzi9","Tzi8",
+                                                  "Mo18W","CML69","Oh7B","Hickory King","NC350","P39","CML247","CML333","LH252","CML103",
+                                                  "Tx303","B97","R84","R78","PHB47","Ky21","CML258","B73","CML341","Shoe Peg","LH123Ht",
+                                                  "2369","NC262","M37W","GT112","F118","PHT60","M162W","LH211","Oh43","W64A"))
+Fig4B=ggplot(data=data,aes(x=Accession, y=Ratio..None.All....IMU, color=Year))+
+  geom_boxplot(size = 0.25, color = "black",fill="gray80") + 
+  geom_point(size = .75) +
   theme_minimal()+
   theme(axis.text.x = element_text(angle=90))+
-  scale_fill_manual(values=c("gray40","gray60","gray80"))+
-  scale_colour_manual(values=c("red4","gold3","plum","mediumvioletred","green4","lawngreen","darkred","red2"))+
+  scale_colour_manual(values=c("red4","darkslategray4"))+
   xlab("Genotype") + 
   ylab("Ratio=None/All")
 Fig4B
-pdf("Figure4B.pdf", width = 11, height = 8.5)
+pdf("Figure4B.pdf", width = 8, height = 5)
 plot(Fig4B)
 dev.off()
 
@@ -393,17 +401,18 @@ cat("\014")
 rm(list=ls()) 
 ls() 
 data = read.csv("FigureS7-S8_03302021.csv", header = TRUE, strip.white = TRUE, na.strings = "NA")
-data$Accession = factor(data$Accession,levels = c("6M502","A632", "B104","CML228","CML277","CML322","CML373","Hp301","Ki11","Ki3","L163","Mo17","Ms71","PHHB4","PHK46","PHR58",
-                                                  "CML52","Hickory King","LH252","Oh7B","CML10","CML69","Mo18W","SA24","Tzi9","R84","2369","CML341","Ky21","M37W",
-                                                  "B97","Shoe Peg","CML247","CML258","PHB47","LH123Ht","Tx303","CML103","Tzi8","R78","B73","CML333","GT112","NC350","P39","F118","LH211","M162W","Oh43","W64A","NC262","PHT60"))
+data$Accession = factor(data$Accession,levels = c("B104","CML228","6M502","CML277","Hp301","PHR58","CML373","L163","Ki11","Ms71",
+                                                  "A632","Mo17","PHK46","PHHB4","Ki3","CML322","CML52","SA24","CML10","Tzi9","Tzi8",
+                                                  "Mo18W","CML69","Oh7B","Hickory King","NC350","P39","CML247","CML333","LH252","CML103",
+                                                  "Tx303","B97","R84","R78","PHB47","Ky21","CML258","B73","CML341","Shoe Peg","LH123Ht",
+                                                  "2369","NC262","M37W","GT112","F118","PHT60","M162W","LH211","Oh43","W64A"))
 data$PLOT_ID2 = as.factor(data$PLOT_ID2)
-S7A=ggplot(data=data,aes(x=Accession, y=w1, color=PLOT_ID2, fill=cat))+
-  geom_boxplot(size = 0.25, color = "black") + 
-  geom_point(size = 1) +
+S7A=ggplot(data=data,aes(x=Accession, y=w1, color=PLOT_ID2))+
+  geom_boxplot(size = 0.25, color = "black", fill="gray60") + 
+  geom_point(size = 1.5) +
   theme_minimal()+
   theme(axis.text.x = element_text(angle=90))+
   scale_colour_manual(values=c("skyblue4","gold2","red4","red1"))+
-  scale_fill_manual(values=c("gray40","gray60","gray80"))+
   xlab("Genotype") + 
   ylab("Number of roots on W1 (count)")
 S7A
@@ -411,13 +420,12 @@ pdf("FigureS7A.pdf", width = 11, height = 8.5)
 plot(S7A)
 dev.off()
 
-S7B=ggplot(data=data,aes(x=Accession, y=w2, color=PLOT_ID2, fill=cat))+
-  geom_boxplot(size = 0.25, color = "black") + 
-  geom_point(size = 1) +
+S7B=ggplot(data=data,aes(x=Accession, y=w2, color=PLOT_ID2))+
+  geom_boxplot(size = 0.25, color = "black", fill="gray60") + 
+  geom_point(size = 1.5) +
   theme_minimal()+
   theme(axis.text.x = element_text(angle=90))+
   scale_colour_manual(values=c("skyblue4","gold2","red4","red1"))+
-  scale_fill_manual(values=c("gray40","gray60","gray80"))+
   xlab("Genotype") + 
   ylab("Number of roots on W2 (count)")
 S7B
@@ -425,13 +433,12 @@ pdf("FigureS7B.pdf", width = 11, height = 8.5)
 plot(S7B)
 dev.off()
 
-S7C=ggplot(data=data,aes(x=Accession, y=w3, color=PLOT_ID2, fill=cat))+
-  geom_boxplot(size = 0.25, color = "black") + 
-  geom_point(size = 1) +
+S7C=ggplot(data=data,aes(x=Accession, y=w3, color=PLOT_ID2))+
+  geom_boxplot(size = 0.25, color = "black", fill="gray60") + 
+  geom_point(size = 1.5) +
   theme_minimal()+
   theme(axis.text.x = element_text(angle=90))+
   scale_colour_manual(values=c("skyblue4","gold2","red4","red1"))+
-  scale_fill_manual(values=c("gray40","gray60","gray80"))+
   xlab("Genotype") + 
   ylab("Number of roots on W3 (count)")
 S7C
@@ -439,13 +446,12 @@ pdf("FigureS7C.pdf", width = 11, height = 8.5)
 plot(S7C)
 dev.off()
 
-S7D=ggplot(data=data,aes(x=Accession, y=single_root_width.cm, color=PLOT_ID2, fill=cat))+
-  geom_boxplot(size = 0.25, color = "black") + 
-  geom_point(size = 1) +
+S7D=ggplot(data=data,aes(x=Accession, y=single_root_width.cm, color=PLOT_ID2))+
+  geom_boxplot(size = 0.25, color = "black", fill="gray60") + 
+  geom_point(size = 1.5) +
   theme_minimal()+
   theme(axis.text.x = element_text(angle=90))+
   scale_colour_manual(values=c("skyblue4","gold2","red4","red1"))+
-  scale_fill_manual(values=c("gray40","gray60","gray80"))+
   xlab("Genotype") + 
   ylab("Single root width (cm)")
 S7D
@@ -453,13 +459,12 @@ pdf("FigureS7D.pdf", width = 11, height = 8.5)
 plot(S7D)
 dev.off()
 
-S7E=ggplot(data=data,aes(x=Accession, y=stalk_width.cm, color=PLOT_ID2, fill=cat))+
-  geom_boxplot(size = 0.25, color = "black") + 
-  geom_point(size = 1) +
+S7E=ggplot(data=data,aes(x=Accession, y=stalk_width.cm, color=PLOT_ID2))+
+  geom_boxplot(size = 0.25, color = "black", fill="gray60") + 
+  geom_point(size = 1.5) +
   theme_minimal()+
   theme(axis.text.x = element_text(angle=90))+
   scale_colour_manual(values=c("skyblue4","gold2","red4","red1"))+
-  scale_fill_manual(values=c("gray40","gray60","gray80"))+
   xlab("Genotype") + 
   ylab("Stalk width (cm)")
 S7E
@@ -467,13 +472,12 @@ pdf("FigureS7E.pdf", width = 11, height = 8.5)
 plot(S7E)
 dev.off()
 
-S7F=ggplot(data=data,aes(x=Accession, y=root_heightonstalk.cm, color=PLOT_ID2, fill=cat))+
-  geom_boxplot(size = 0.25, color = "black") + 
-  geom_point(size = 1) +
+S7F=ggplot(data=data,aes(x=Accession, y=root_heightonstalk.cm, color=PLOT_ID2))+
+  geom_boxplot(size = 0.25, color = "black", fill="gray60") + 
+  geom_point(size = 1.5) +
   theme_minimal()+
   theme(axis.text.x = element_text(angle=90))+
   scale_colour_manual(values=c("skyblue4","gold2","red4","red1"))+
-  scale_fill_manual(values=c("gray40","gray60","gray80"))+
   xlab("Genotype") + 
   ylab("Root height on stalk (cm)")
 S7F
@@ -481,13 +485,12 @@ pdf("FigureS7F.pdf", width = 11, height = 8.5)
 plot(S7F)
 dev.off()
 
-S7G=ggplot(data=data,aes(x=Accession, y=stalk_to_rootgrounding.cm, color=PLOT_ID2, fill=cat))+
-  geom_boxplot(size = 0.25, color = "black") + 
-  geom_point(size = 1) +
+S7G=ggplot(data=data,aes(x=Accession, y=stalk_to_rootgrounding.cm, color=PLOT_ID2))+
+  geom_boxplot(size = 0.25, color = "black", fill="gray60") + 
+  geom_point(size = 1.5) +
   theme_minimal()+
   theme(axis.text.x = element_text(angle=90))+
   scale_colour_manual(values=c("skyblue4","gold2","red4","red1"))+
-  scale_fill_manual(values=c("gray40","gray60","gray80"))+
   xlab("Genotype") + 
   ylab("Stalk to root grounding (cm)")
 S7G
@@ -495,13 +498,12 @@ pdf("FigureS7G.pdf", width = 11, height = 8.5)
 plot(S7G)
 dev.off()
 
-S7H=ggplot(data=data,aes(x=Accession, y=root_angle, color=PLOT_ID2, fill=cat))+
-  geom_boxplot(size = 0.25, color = "black") + 
-  geom_point(size = 1) +
+S7H=ggplot(data=data,aes(x=Accession, y=root_angle, color=PLOT_ID2))+
+  geom_boxplot(size = 0.25, color = "black", fill="gray60") + 
+  geom_point(size = 1.5) +
   theme_minimal()+
   theme(axis.text.x = element_text(angle=90))+
   scale_colour_manual(values=c("skyblue4","gold2","red4","red1"))+
-  scale_fill_manual(values=c("gray40","gray60","gray80"))+
   xlab("Genotype") + 
   ylab("Root angle (degrees)")
 S7H
@@ -509,27 +511,25 @@ pdf("FigureS7H.pdf", width = 11, height = 8.5)
 plot(S7H)
 dev.off()
 
-S7I=ggplot(data=data,aes(x=Accession, y=spread_width.cm, color=PLOT_ID2, fill=cat))+
-  geom_boxplot(size = 0.25, color = "black") + 
-  geom_point(size = 1) +
+S7I=ggplot(data=data,aes(x=Accession, y=spread_width.cm, color=PLOT_ID2))+
+  geom_boxplot(size = 0.25, color = "black", fill="gray60") + 
+  geom_point(size = 1.5) +
   theme_minimal()+
   theme(axis.text.x = element_text(angle=90))+
   scale_colour_manual(values=c("skyblue4","gold2","red4","red1"))+
-  scale_fill_manual(values=c("gray40","gray60","gray80"))+
   xlab("Genotype") + 
-  ylab("Spread width")
+  ylab("Spread width(cm)")
 S7I
 pdf("FigureS7I.pdf", width = 11, height = 8.5)
 plot(S7I)
 dev.off()
 
-S7J=ggplot(data=data,aes(x=Accession, y=num_whorls, color=PLOT_ID2, fill=cat))+
-  geom_boxplot(size = 0.25, color = "black") + 
-  geom_point(size = 1) +
+S7J=ggplot(data=data,aes(x=Accession, y=num_whorls, color=PLOT_ID2))+
+  geom_boxplot(size = 0.25, color = "black", fill="gray60") + 
+  geom_point(size = 1.5) +
   theme_minimal()+
   theme(axis.text.x = element_text(angle=90))+
   scale_colour_manual(values=c("skyblue4","gold2","red4","red1"))+
-  scale_fill_manual(values=c("gray40","gray60","gray80"))+
   xlab("Genotype") + 
   ylab("Number of whorls in the soil - GUI (count)")
 S7J
@@ -537,13 +537,12 @@ pdf("FigureS7J.pdf", width = 11, height = 8.5)
 plot(S7J)
 dev.off()
 
-S7K=ggplot(data=data,aes(x=Accession, y=Brace.Root.Whorls.in.the.Soil, color=PLOT_ID2, fill=cat))+
-  geom_boxplot(size = 0.25, color = "black") + 
-  geom_point(size = 1) +
+S7K=ggplot(data=data,aes(x=Accession, y=Brace.Root.Whorls.in.the.Soil, color=PLOT_ID2))+
+  geom_boxplot(size = 0.25, color = "black", fill="gray60") + 
+  geom_point(size = 1.5) +
   theme_minimal()+
   theme(axis.text.x = element_text(angle=90))+
   scale_colour_manual(values=c("skyblue4","gold2","red4","red1"))+
-  scale_fill_manual(values=c("gray40","gray60","gray80"))+
   xlab("Genotype") + 
   ylab("Number of whorls in the soil - Manual (count)")
 S7K
@@ -551,13 +550,12 @@ pdf("FigureS7K.pdf", width = 11, height = 8.5)
 plot(S7K)
 dev.off()
 
-S7L=ggplot(data=data,aes(x=Accession, y=height.cm., color=PLOT_ID2, fill=cat))+
-  geom_boxplot(size = 0.25, color = "black") + 
-  geom_point(size = 1) +
+S7L=ggplot(data=data,aes(x=Accession, y=height.cm., color=PLOT_ID2))+
+  geom_boxplot(size = 0.25, color = "black", fill="gray60") + 
+  geom_point(size = 1.5) +
   theme_minimal()+
   theme(axis.text.x = element_text(angle=90))+
   scale_colour_manual(values=c("skyblue4","gold2","red4","red1"))+
-  scale_fill_manual(values=c("gray40","gray60","gray80"))+
   xlab("Genotype") + 
   ylab("Height (cm)")
 S7L
